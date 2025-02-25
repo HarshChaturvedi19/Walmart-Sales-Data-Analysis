@@ -103,3 +103,18 @@ SELECT
 FROM ranked_payments
 WHERE rnk = 1
 ORDER BY branch;
+
+
+
+-- Q8: Categorize sales into Morning, Afternoon, and Evening shifts
+SELECT
+    branch,
+    CASE 
+        WHEN HOUR(TIME(time)) < 12 THEN 'Morning'
+        WHEN HOUR(TIME(time)) BETWEEN 12 AND 17 THEN 'Afternoon'
+        ELSE 'Evening'
+    END AS shift,
+    COUNT(*) AS num_invoices
+FROM walmart
+GROUP BY branch, shift
+ORDER BY branch, num_invoices DESC;
